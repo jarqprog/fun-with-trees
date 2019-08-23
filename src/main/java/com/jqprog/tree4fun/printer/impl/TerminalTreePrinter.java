@@ -9,6 +9,13 @@ import java.util.List;
 
 public class TerminalTreePrinter implements TreePrinter {
 
+    public static TreePrinter getInstance() {
+        return new TerminalTreePrinter();
+    }
+
+
+    private TerminalTreePrinter() {
+    }
 
     @Override
     public void print(PrintableTree root) {
