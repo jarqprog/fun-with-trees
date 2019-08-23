@@ -11,25 +11,28 @@ public class RandomTree implements TreeKeeper<Integer> {
     private static int nodeUid = 0;
 
     private final int maxLevel;
-    private final Random chaos;
-    private final SomeTree root;
+    private final Random chaos = new Random();
+    private final PrintableTree<Integer> root;
     private final int maxValueInTree;
 
 
-    public RandomTree(int maxLevel, int rootValue, int maxValueInTree) {
-        this.maxLevel = maxLevel;
-        this.maxValueInTree = maxValueInTree;
-        this.root = new SomeTree(rootValue);
-        this.chaos = new Random();
+    public static RandomTreeBuilder builder() {
+        return new RandomTreeBuilder();
     }
 
-    public SomeTree getRoot() {
+    private RandomTree(int maxLevel, PrintableTree<Integer> root, int maxValueInTree) {
+        this.maxLevel = maxLevel;
+        this.root = root;
+        this.maxValueInTree = maxValueInTree;
+    }
+
+    public PrintableTree<Integer> getRoot() {
         return this.root;
     }
 
     public void createTree() {
         int currentSize = 1;
-        createRecursive(root, currentSize);
+        createRecursive((SomeTree) root, currentSize);
     }
 
 
@@ -60,10 +63,42 @@ public class RandomTree implements TreeKeeper<Integer> {
         return result > risk;
     }
 
-    public class SomeTree implements PrintableTree<Integer> {
+
+    /**
+     * builder
+     */
+    public static class RandomTreeBuilder {
+        private int maxLevel;
+        private int maxValueInTree;
+        private int rootValue;
+
+        public RandomTreeBuilder addMaxTreeLevel(int maxLevel) {
+            this.maxLevel = maxLevel;
+            return this;
+        }
+
+        public RandomTreeBuilder addMaxValueInTree(int maxValueInTree) {
+            this.maxValueInTree = maxValueInTree;
+            return this;
+        }
+
+        public RandomTreeBuilder addRootValue(int rootValue) {
+            this.rootValue = rootValue;
+            return this;
+        }
+
+        public TreeKeeper<Integer> build() {
+            return new RandomTree(maxLevel, new SomeTree(rootValue), maxValueInTree);
+        }
+    }
+
+
+
+
+    public static class SomeTree implements PrintableTree<Integer> {
         private int value;
-        private SomeTree left;
-        private SomeTree right;
+        private PrintableTree<Integer> left;
+        private PrintableTree<Integer> right;
 
         private SomeTree() {
             this.value = ++nodeUid;
@@ -84,19 +119,19 @@ public class RandomTree implements TreeKeeper<Integer> {
             return value;
         }
 
-        public SomeTree getLeft() {
+        public PrintableTree<Integer> getLeft() {
             return left;
         }
 
-        private void setLeft(SomeTree left) {
+        private void setLeft(PrintableTree<Integer> left) {
             this.left = left;
         }
 
-        public SomeTree getRight() {
+        public PrintableTree<Integer> getRight() {
             return right;
         }
 
-        private void setRight(SomeTree right) {
+        private void setRight(PrintableTree<Integer> right) {
             this.right = right;
         }
 
