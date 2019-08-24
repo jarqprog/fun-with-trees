@@ -19,7 +19,7 @@ public class App {
 
         showIntro();
 
-        printer.printText("creating tree with random tree keeper...");
+        printer.printText("Creating tree with random tree keeper...");
         pause();
 
         TreePrinter printer = TerminalTreePrinter.getInstance();
