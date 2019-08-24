@@ -1,6 +1,8 @@
 package com.jqprog.tree4fun;
 
 
+import com.jqprog.tree4fun.heightFinder.HeightFinder;
+import com.jqprog.tree4fun.heightFinder.impl.SimpleHeightFinder;
 import com.jqprog.tree4fun.printer.Printer;
 import com.jqprog.tree4fun.printer.TreePrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalPrinter;
@@ -22,20 +24,30 @@ public class App {
         printer.printText("Creating tree with random tree keeper...");
         pause();
 
-        TreePrinter printer = TerminalTreePrinter.getInstance();
+        TreePrinter treePrinter = TerminalTreePrinter.getInstance();
 
         TreeKeeper<Integer> randomKeeper = RandomTree
                 .builder()
-                .addMaxTreeLevel(6)
+                .addMaxTreeHeight(6)
                 .addMaxValueInTree(9)
                 .addRootValue(1)
                 .addBalanceFactor(10)
                 .build();
 
         randomKeeper.createTree();
-        printer.print(randomKeeper.getRoot());
+        treePrinter.print(randomKeeper.getRoot());
 
         pause();
+
+
+
+        HeightFinder heightFinder = SimpleHeightFinder.getInstance();
+
+        int height = heightFinder.find(randomKeeper.getRoot());
+
+        printer.printText("height of the tree is: " + height);
+
+
     }
 
     private static void showIntro() {

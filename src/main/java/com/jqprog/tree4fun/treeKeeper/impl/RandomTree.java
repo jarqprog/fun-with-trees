@@ -8,7 +8,7 @@ import java.util.*;
 
 public class RandomTree implements TreeKeeper<Integer> {
 
-    private final int maxLevel;
+    private final int maxHeight;
     private final Random chaos = new Random();
     private final PrintableTree<Integer> root;
     private final int maxValueInTree;
@@ -19,8 +19,8 @@ public class RandomTree implements TreeKeeper<Integer> {
         return new RandomTreeBuilder();
     }
 
-    private RandomTree(int maxLevel, PrintableTree<Integer> root, int maxValueInTree, int balanceFactor) {
-        this.maxLevel = maxLevel;
+    private RandomTree(int maxHeight, PrintableTree<Integer> root, int maxValueInTree, int balanceFactor) {
+        this.maxHeight = maxHeight;
         this.root = root;
         this.maxValueInTree = maxValueInTree;
         this.balanceFactor = balanceFactor;
@@ -31,27 +31,27 @@ public class RandomTree implements TreeKeeper<Integer> {
     }
 
     public void createTree() {
-        int currentSize = 1;
-        createRecursive((SomeTree) root, currentSize);
+        int currentHeight = 1;
+        createRecursive((SomeTree) root, currentHeight);
     }
 
 
-    private void createRecursive(SomeTree tree, int currentLevel) {
-        if (currentLevel > maxLevel) {
+    private void createRecursive(SomeTree tree, int currentHeight) {
+        if (currentHeight >= maxHeight) {
             return;
         }
-        currentLevel++;
+        currentHeight++;
 
         if (shouldGenerateNode()) {
             SomeTree left = new SomeTree(chaos.nextInt(maxValueInTree));
             tree.setLeft(left);
-            createRecursive(left, currentLevel);
+            createRecursive(left, currentHeight);
         }
 
         if (shouldGenerateNode()) {
             SomeTree right = new SomeTree(chaos.nextInt(maxValueInTree));
             tree.setRight(right);
-            createRecursive(right, currentLevel);
+            createRecursive(right, currentHeight);
         }
     }
 
@@ -68,17 +68,17 @@ public class RandomTree implements TreeKeeper<Integer> {
      */
     public static class RandomTreeBuilder {
         private final static int minimalBalanceFactor = 5;
-        private int maxLevel = 5;
+        private int maxHeight = 5;
         private int maxValueInTree = 9;
         private int rootValue = 1;
         private int balanceFactor = 20;
 
-        public RandomTreeBuilder addMaxTreeLevel(int maxLevel) {
-            final short minimalMaxTreeLevel = 2;
-            if (maxLevel < minimalMaxTreeLevel) {
-                throw new IllegalArgumentException("Max tree level must be greater than: " + minimalMaxTreeLevel);
+        public RandomTreeBuilder addMaxTreeHeight(int maxHeight) {
+            final short minimalMaxTreeHeight = 2;
+            if (maxHeight < minimalMaxTreeHeight) {
+                throw new IllegalArgumentException("Max tree height must be greater than: " + minimalMaxTreeHeight);
             }
-            this.maxLevel = maxLevel;
+            this.maxHeight = maxHeight;
             return this;
         }
 
@@ -106,7 +106,7 @@ public class RandomTree implements TreeKeeper<Integer> {
         }
 
         public TreeKeeper<Integer> build() {
-            return new RandomTree(maxLevel, new SomeTree(rootValue), maxValueInTree, balanceFactor);
+            return new RandomTree(maxHeight, new SomeTree(rootValue), maxValueInTree, balanceFactor);
         }
     }
 
