@@ -8,22 +8,22 @@ import java.util.*;
 
 public class RandomTree implements TreeKeeper<Integer> {
 
-    private static int nodeUid = 0;
-
     private final int maxLevel;
     private final Random chaos = new Random();
     private final PrintableTree<Integer> root;
     private final int maxValueInTree;
+    private final int balanceFactor;
 
 
     public static RandomTreeBuilder builder() {
         return new RandomTreeBuilder();
     }
 
-    private RandomTree(int maxLevel, PrintableTree<Integer> root, int maxValueInTree) {
+    private RandomTree(int maxLevel, PrintableTree<Integer> root, int maxValueInTree, int balanceFactor) {
         this.maxLevel = maxLevel;
         this.root = root;
         this.maxValueInTree = maxValueInTree;
+        this.balanceFactor = balanceFactor;
     }
 
     public PrintableTree<Integer> getRoot() {
@@ -57,9 +57,8 @@ public class RandomTree implements TreeKeeper<Integer> {
 
     private boolean shouldGenerateNode() {
         int maxRisk = 1;
-        int treeBalance = 5;// the higher, the more balanced tree
         int risk = chaos.nextInt(maxRisk);
-        int result = chaos.nextInt(treeBalance);
+        int result = chaos.nextInt(balanceFactor);
         return result > risk;
     }
 
@@ -68,16 +67,26 @@ public class RandomTree implements TreeKeeper<Integer> {
      * builder
      */
     public static class RandomTreeBuilder {
-        private int maxLevel;
-        private int maxValueInTree;
-        private int rootValue;
+        private final static int minimalBalanceFactor = 5;
+        private int maxLevel = 5;
+        private int maxValueInTree = 9;
+        private int rootValue = 1;
+        private int balanceFactor = 20;
 
         public RandomTreeBuilder addMaxTreeLevel(int maxLevel) {
+            final short minimalMaxTreeLevel = 2;
+            if (maxLevel < minimalMaxTreeLevel) {
+                throw new IllegalArgumentException("Max tree level must be greater than: " + minimalMaxTreeLevel);
+            }
             this.maxLevel = maxLevel;
             return this;
         }
 
         public RandomTreeBuilder addMaxValueInTree(int maxValueInTree) {
+            final short minimalMaxValueInTree = 5;
+            if (maxValueInTree < minimalMaxValueInTree) {
+                throw new IllegalArgumentException("Max value in tree must be greater than: " + minimalMaxValueInTree);
+            }
             this.maxValueInTree = maxValueInTree;
             return this;
         }
@@ -87,8 +96,17 @@ public class RandomTree implements TreeKeeper<Integer> {
             return this;
         }
 
+        public RandomTreeBuilder addBalanceFactor(int balanceFactor) {
+            if (balanceFactor < minimalBalanceFactor) {
+                throw new IllegalArgumentException("Balance factor must be greater than: " + minimalBalanceFactor +
+                        ". The greater factor, your tree is more balanced (recommended value = 20)");
+            }
+            this.balanceFactor = balanceFactor;
+            return this;
+        }
+
         public TreeKeeper<Integer> build() {
-            return new RandomTree(maxLevel, new SomeTree(rootValue), maxValueInTree);
+            return new RandomTree(maxLevel, new SomeTree(rootValue), maxValueInTree, balanceFactor);
         }
     }
 
@@ -99,16 +117,6 @@ public class RandomTree implements TreeKeeper<Integer> {
         private int value;
         private PrintableTree<Integer> left;
         private PrintableTree<Integer> right;
-
-        private SomeTree() {
-            this.value = ++nodeUid;
-        }
-
-        private SomeTree(int value, SomeTree left, SomeTree right) {
-            this.value = value;
-            this.left = left;
-            this.right = right;
-        }
 
         private SomeTree(int value) {
             this.value = value;

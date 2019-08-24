@@ -29,6 +29,7 @@ public class App {
                 .addMaxTreeLevel(6)
                 .addMaxValueInTree(9)
                 .addRootValue(1)
+                .addBalanceFactor(10)
                 .build();
 
         randomKeeper.createTree();
