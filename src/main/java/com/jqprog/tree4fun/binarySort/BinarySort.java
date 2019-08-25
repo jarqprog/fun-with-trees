@@ -1,6 +1,6 @@
 package com.jqprog.tree4fun.binarySort;
 
-import com.jqprog.tree4fun.treeKeeper.impl.BinaryTree;
+import com.jqprog.tree4fun.treeKeeper.BinaryTree;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.jqprog.tree4fun.binarySort.impl;
 
 import com.jqprog.tree4fun.PrintableTree;
 import com.jqprog.tree4fun.binarySort.BinarySort;
-import com.jqprog.tree4fun.treeKeeper.impl.BinaryTree;
+import com.jqprog.tree4fun.treeKeeper.BinaryTree;
 
 import java.util.LinkedList;
 import java.util.List;

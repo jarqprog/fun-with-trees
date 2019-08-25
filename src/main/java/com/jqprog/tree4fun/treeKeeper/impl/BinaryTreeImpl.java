@@ -2,12 +2,10 @@ package com.jqprog.tree4fun.treeKeeper.impl;
 
 
 import com.jqprog.tree4fun.PrintableTree;
+import com.jqprog.tree4fun.treeKeeper.BinaryTree;
 import com.jqprog.tree4fun.treeKeeper.TreeKeeper;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class BinaryTree implements TreeKeeper<Integer> {
+public class BinaryTreeImpl implements TreeKeeper<Integer>, BinaryTree {
 
     private static int nodeIdGen = 0;
 
@@ -15,14 +13,14 @@ public class BinaryTree implements TreeKeeper<Integer> {
         if (numbers.length == 0) {
             throw new IllegalArgumentException("Cannot create binary tree without numbers!");
         }
-        return new BinaryTree(numbers);
+        return new BinaryTreeImpl(numbers);
     }
 
     private final PrintableTree<Integer> root;
     private final int[] numbers;
 
 
-    private BinaryTree(int[] numbers) {
+    private BinaryTreeImpl(int[] numbers) {
         this.numbers = numbers;
         this.root = new Tree(numbers[0]);
     }

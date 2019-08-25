@@ -10,7 +10,7 @@ import com.jqprog.tree4fun.printer.TreePrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalPrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalTreePrinter;
 import com.jqprog.tree4fun.treeKeeper.TreeKeeper;
-import com.jqprog.tree4fun.treeKeeper.impl.BinaryTree;
+import com.jqprog.tree4fun.treeKeeper.impl.BinaryTreeImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +33,7 @@ public class App {
         printer.printText("Creating binary tree with data: " + Arrays.toString(binaryTreeData));
         pause();
 
-        TreeKeeper<Integer> binaryTreeKeeper =  BinaryTree.getInstance(binaryTreeData);
+        TreeKeeper<Integer> binaryTreeKeeper =  BinaryTreeImpl.getInstance(binaryTreeData);
         binaryTreeKeeper.createTree();
 
         treePrinter.print(binaryTreeKeeper.getRoot());
@@ -44,7 +44,7 @@ public class App {
 
         BinarySort binarySort = BinarySortImpl.getInstance();
         printer.printText("Use binary tree to sort numbers: " + Arrays.toString(binaryTreeData));
-        List<Integer> sorted = binarySort.sort((BinaryTree) binaryTreeKeeper);
+        List<Integer> sorted = binarySort.sort((BinaryTreeImpl) binaryTreeKeeper);
         printer.printText("After sort: " + sorted);
         pause();
 
