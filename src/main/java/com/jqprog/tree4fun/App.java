@@ -1,6 +1,8 @@
 package com.jqprog.tree4fun;
 
 
+import com.jqprog.tree4fun.binaryFinder.BinaryFinder;
+import com.jqprog.tree4fun.binaryFinder.impl.BinaryFinderImpl;
 import com.jqprog.tree4fun.binarySort.BinarySort;
 import com.jqprog.tree4fun.binarySort.impl.BinarySortImpl;
 import com.jqprog.tree4fun.heightFinder.HeightFinder;
@@ -9,6 +11,7 @@ import com.jqprog.tree4fun.printer.Printer;
 import com.jqprog.tree4fun.printer.TreePrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalPrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalTreePrinter;
+import com.jqprog.tree4fun.treeKeeper.BinaryTree;
 import com.jqprog.tree4fun.treeKeeper.TreeKeeper;
 import com.jqprog.tree4fun.treeKeeper.impl.BinaryTreeImpl;
 
@@ -31,7 +34,7 @@ public class App {
 
         int[] binaryTreeData = {-2, 3, 1, 0, 7, 9, 2, -5, -4, 3, 4, 5, 5, 1, 2, -9, -4, 8, 5, 6};
         printer.printText("Creating binary tree with data: " + Arrays.toString(binaryTreeData));
-        pause();
+//        pause();
 
         TreeKeeper<Integer> binaryTreeKeeper =  BinaryTreeImpl.getInstance(binaryTreeData);
         binaryTreeKeeper.createTree();
@@ -46,8 +49,16 @@ public class App {
         printer.printText("Use binary tree to sort numbers: " + Arrays.toString(binaryTreeData));
         List<Integer> sorted = binarySort.sort((BinaryTreeImpl) binaryTreeKeeper);
         printer.printText("After sort: " + sorted);
-        pause();
+//        pause();
 
+        BinaryFinder binaryFinder = BinaryFinderImpl.getInstance();
+        printer.printText("Check if number: " + 5 + " exist in binary tree:");
+        boolean contains5 = binaryFinder.contains((BinaryTree) binaryTreeKeeper, 5);
+        printer.printText("Answer: " + contains5);
+
+        printer.printText("Check if number: " + 15 + " exist in binary tree:");
+        boolean contains15 = binaryFinder.contains((BinaryTree) binaryTreeKeeper, 15);
+        printer.printText("Answer: " + contains15);
 
 
 //        printer.printText("Creating tree with random tree keeper...");
