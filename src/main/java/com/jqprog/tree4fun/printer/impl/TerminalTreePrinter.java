@@ -9,6 +9,8 @@ import java.util.List;
 
 public class TerminalTreePrinter implements TreePrinter {
 
+    private final static int MAX_LEVEL_TO_PRINT = 8;
+
     public static TreePrinter getInstance() {
         return new TerminalTreePrinter();
     }
@@ -20,6 +22,10 @@ public class TerminalTreePrinter implements TreePrinter {
     @Override
     public void print(PrintableTree root) {
         int maxLevel = maxLevel(root);
+        if (maxLevel > MAX_LEVEL_TO_PRINT) {
+            throw new RuntimeException("Cannot print tree with height more than " +MAX_LEVEL_TO_PRINT +
+                    ", give me smaller tree, please...");
+        }
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 

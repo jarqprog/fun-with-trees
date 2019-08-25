@@ -8,44 +8,70 @@ import com.jqprog.tree4fun.printer.TreePrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalPrinter;
 import com.jqprog.tree4fun.printer.impl.TerminalTreePrinter;
 import com.jqprog.tree4fun.treeKeeper.TreeKeeper;
-import com.jqprog.tree4fun.treeKeeper.impl.RandomTree;
+import com.jqprog.tree4fun.treeKeeper.impl.BinaryTree;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class App {
 
     private final static Printer printer = new TerminalPrinter();
+    private final static Logger logger = Logger.getLogger(App.class.getSimpleName());
     private final static Scanner scanner = new Scanner(System.in);
+    private final static TreePrinter treePrinter = TerminalTreePrinter.getInstance();
+    private final static HeightFinder heightFinder = SimpleHeightFinder.getInstance();
 
     public static void main(String[] args) {
 
         showIntro();
 
-        printer.printText("Creating tree with random tree keeper...");
+        int[] binaryTreeData = {-2, 3, 1, 0, 7, 9, 2, -5, -4, 3, 4, 5, 5, 1, 2, -9, -4, 8, 5, 6};
+        printer.printText("Creating binary tree with data: " + Arrays.toString(binaryTreeData));
         pause();
 
-        TreePrinter treePrinter = TerminalTreePrinter.getInstance();
+        TreeKeeper<Integer> binaryTreeKeeper =  BinaryTree.getInstance(binaryTreeData);
+        binaryTreeKeeper.createTree();
 
-        TreeKeeper<Integer> randomKeeper = RandomTree
-                .builder()
-                .addMaxTreeHeight(6)
-                .addMaxValueInTree(9)
-                .addRootValue(1)
-                .addBalanceFactor(10)
-                .build();
+        treePrinter.print(binaryTreeKeeper.getRoot());
 
-        randomKeeper.createTree();
-        treePrinter.print(randomKeeper.getRoot());
-
-        pause();
-
-
-
-        HeightFinder heightFinder = SimpleHeightFinder.getInstance();
-
-        int height = heightFinder.find(randomKeeper.getRoot());
+        int height = heightFinder.find(binaryTreeKeeper.getRoot());
 
         printer.printText("height of the tree is: " + height);
+
+        BinaryTree binaryTree = (BinaryTree) binaryTreeKeeper;
+        printer.printText("Use binary tree to sort numbers: " + Arrays.toString(binaryTreeData));
+        List<Integer> sorted = binaryTree.sort();
+        printer.printText("After sort: " + sorted);
+        pause();
+
+
+
+//        printer.printText("Creating tree with random tree keeper...");
+//        pause();
+//
+
+//
+//        TreeKeeper<Integer> randomKeeper = RandomTree
+//                .builder()
+//                .addMaxTreeHeight(6)
+//                .addMaxValueInTree(9)
+//                .addRootValue(1)
+//                .addBalanceFactor(10)
+//                .build();
+//
+//        randomKeeper.createTree();
+//        treePrinter.print(randomKeeper.getRoot());
+//
+//        pause();
+//
+//
+//
+//
+//        int height = heightFinder.find(randomKeeper.getRoot());
+//
+//        printer.printText("height of the tree is: " + height);
 
 
     }

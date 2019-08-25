@@ -19,9 +19,6 @@ public class SimpleHeightFinder implements HeightFinder {
     }
 
     private int findRec(PrintableTree root, int height) {
-
-        System.out.println(root);
-        System.out.println(height);
         if (root == null) {
             return height;
         }
