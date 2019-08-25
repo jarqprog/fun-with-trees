@@ -1,6 +1,8 @@
 package com.jqprog.tree4fun;
 
 
+import com.jqprog.tree4fun.binarySort.BinarySort;
+import com.jqprog.tree4fun.binarySort.impl.BinarySortImpl;
 import com.jqprog.tree4fun.heightFinder.HeightFinder;
 import com.jqprog.tree4fun.heightFinder.impl.SimpleHeightFinder;
 import com.jqprog.tree4fun.printer.Printer;
@@ -40,9 +42,9 @@ public class App {
 
         printer.printText("height of the tree is: " + height);
 
-        BinaryTree binaryTree = (BinaryTree) binaryTreeKeeper;
+        BinarySort binarySort = BinarySortImpl.getInstance();
         printer.printText("Use binary tree to sort numbers: " + Arrays.toString(binaryTreeData));
-        List<Integer> sorted = binaryTree.sort();
+        List<Integer> sorted = binarySort.sort((BinaryTree) binaryTreeKeeper);
         printer.printText("After sort: " + sorted);
         pause();
 

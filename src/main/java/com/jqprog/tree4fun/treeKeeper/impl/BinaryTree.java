@@ -61,21 +61,6 @@ public class BinaryTree implements TreeKeeper<Integer> {
         }
     }
 
-    public List<Integer> sort() {
-        List<Integer> sorted = new LinkedList<>();
-        sortAscRec((Tree) root, sorted);
-        return sorted;
-    }
-
-    private void sortAscRec(Tree node, List<Integer> sorted) {
-        if (node == null) {
-            return;
-        }
-        sortAscRec(node.leftChild, sorted);
-        sorted.add(node.getValue());
-        sortAscRec(node.rightChild, sorted);
-    }
-
     @Override
     public PrintableTree<Integer> getRoot() {
         return this.root;
