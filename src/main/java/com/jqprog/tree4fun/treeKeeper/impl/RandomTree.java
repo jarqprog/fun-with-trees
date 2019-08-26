@@ -8,6 +8,8 @@ import java.util.*;
 
 public class RandomTree implements TreeKeeper<Integer> {
 
+    private static int nodeIdGen = 0;
+
     private final int maxHeight;
     private final Random chaos = new Random();
     private final PrintableTree<Integer> root;
@@ -114,11 +116,14 @@ public class RandomTree implements TreeKeeper<Integer> {
 
 
     public static class SomeTree implements PrintableTree<Integer> {
+
+        private final int id;
         private int value;
         private PrintableTree<Integer> left;
         private PrintableTree<Integer> right;
 
         private SomeTree(int value) {
+            this.id = ++nodeIdGen;
             this.value = value;
         }
 
@@ -147,9 +152,12 @@ public class RandomTree implements TreeKeeper<Integer> {
         public String toString() {
             return "SomeTree{" +
                     "value=" + value +
-                    ", left=" + left +
-                    ", right=" + right +
+                    "id=" + id+
                     '}';
+        }
+
+        public int getId() {
+            return id;
         }
     }
 }

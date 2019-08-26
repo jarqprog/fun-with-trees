@@ -80,11 +80,7 @@ public class BinaryTreeImpl implements TreeKeeper<Integer>, BinaryTree {
 
         @Override
         public String toString() {
-            return "Tree{" +
-                    "id=" + id +
-                    ", value=" + value +
-                    ", leftChild=" + leftChild +
-                    ", rightChild=" + rightChild +
+            return "Tree{value=" + value +
                     '}';
         }
 
@@ -101,6 +97,10 @@ public class BinaryTreeImpl implements TreeKeeper<Integer>, BinaryTree {
         @Override
         public PrintableTree<Integer> getRight() {
             return rightChild;
+        }
+
+        public int getId() {
+            return id;
         }
     }
 }
